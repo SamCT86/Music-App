@@ -55,7 +55,6 @@ function playPauseSong() {
 
 // Play next song function
 function playNextSong() {
-    // If the current index(songIndex) is the last song (musicObject[2]) in the track, we reset the index and back to zero and increase the index 
     if (songIndex === musicObject.length - 1) {
         songIndex = 0;
     } else {
@@ -77,7 +76,6 @@ function playNextSong() {
 
 // Previous song function
 function prevSong() {
-    // To prevent songIndex of less than 0
     if (songIndex < 0) {
         songIndex = 2;
     } else {
@@ -108,28 +106,27 @@ function updateProgressBar(e) {
     const minutes = Math.floor(current / 60);
     const seconds = Math.floor(current % 60);
     const secondsFormatted = (seconds < 10) ? `0${seconds}` : seconds;
-    const timeUpdate = `${minutes}:${secondsFormatted}`; // Return the calculated time to the DOM
-    currentTime.textContent = timeUpdate; // Append timeUpdate to DOM
+    const timeUpdate = `${minutes}:${secondsFormatted}`;
+    currentTime.textContent = timeUpdate;
 
     // Calculate duration time and declare/ display duration time
     const durationTime = audio.duration;
     const durationMinutes = Math.floor(durationTime / 60);
     const durationSeconds = Math.floor(durationTime % 60);
     const durationSecondsFormatted = (durationSeconds < 10) ? `0${durationSeconds}` : durationSeconds;
-    const durationUpdate = `${durationMinutes}:${durationSecondsFormatted}`; // Return
-    duration.textContent = durationUpdate; // Update DOM
+    const durationUpdate = `${durationMinutes}:${durationSecondsFormatted}`;
+    duration.textContent = durationUpdate;
 
     // Update the progress bar percentage of the song
     const percentage = (audio.currentTime / audio.duration) * 100;
-    progressBar.style.width = `${percentage}%`; // Update the DOM
+    progressBar.style.width = `${percentage}%`;
 }
 
 // If the progress bar is clicked, let the song play at current click location
 function moveToProgressBar(e) {
-    // Declare the event location
     const width = this.offsetWidth;
     const clickX = e.offsetX;
-    // Update the song current time  
+    // Update the song to the current click location
     const percent = clickX / width;
     const duration = audio.duration;
     audio.currentTime = percent * duration;
@@ -141,4 +138,4 @@ nextBtn.addEventListener('click', playNextSong);
 prevBtn.addEventListener('click', prevSong);
 audio.addEventListener('timeupdate', updateProgressBar);
 progressParent.addEventListener('click', moveToProgressBar);
-audio.addEventListener('loadedmetadata', () => updateProgressBar()); // Update progress bar when audio element has loaded
+audio.addEventListener('loadedmetadata', () => updateProgressBar());
